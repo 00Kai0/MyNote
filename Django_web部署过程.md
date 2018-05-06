@@ -102,6 +102,8 @@ sudo vi /home/kai/blog/blog/settings.py
 ```
 DEBUG = False #修改为False
 
+ALLOWED_HOSTS=['.example.com','IP'] #写入允许通过的IP或者域名
+
 TIME_ZONE = 'Asia/Shanghai' #修改时区
 USE_TZ = False
 
