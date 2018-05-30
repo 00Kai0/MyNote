@@ -46,7 +46,12 @@ python3 manager.py migrate
 ##**3.Apache2配置**##
 安装Apache及相关驱动
 ```
-sudo apt-get install apahche2,libapache2-mod-wgsi-py3
+sudo apt-get install apahche2,libapache2-mod-wsgi-py3
+```
+设置服务器端口配置文件,加入端口    
+vi /etc/apache2/ports.conf
+```
+Listen 8000 #监听8000端口
 ```
 设置服务器的网站配置文件<br/>
 路径根据实际情况修改<br/>
@@ -92,6 +97,7 @@ import sys
 sys.path.insert(0,PROJECT_DIR)
  
 os.environ["DJANGO_SETTINGS_MODULE"] = "blog.settings"
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "img_save_server.settings")
  
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
@@ -127,15 +133,15 @@ python3 manager.py  collectstatic
 sudo chmod -R 644 blog
 sudo find blog -type d | xargs chmod 755
 ```
-修改服务器运行用户,不要设成root
+修改服务器运行用户,不要设成root   
 sudo vi /etc/apache2/envvars
 ```
 # Since there is no sane way to get the parsed apache2 config in scripts, some
 # settings are defined via environment variables and then used in apache2ctl,
 # /etc/init.d/apache2, /etc/logrotate.d/apache2, etc.
  
-export APACHE_RUN_USER=www-data #改为当前用户
-export APACHE_RUN_GROUP=www-data #同上
+export APACHE_RUN_USER=www-data #改为当前用户   
+export APACHE_RUN_GROUP=www-data #同上   
 ```
 如服务器只有一个root账户,则需增加一个运行服务器的用户,在root下操作
 ```
@@ -154,8 +160,8 @@ sudo service apache2 reload
 
 ##**7.注意事项**##
 
-mysql数据库中可能出现中文无法存入,由编码导致
-使用:
+mysql数据库中可能出现中文无法存入,由编码导致    
+使用:    
 ```sql
 ALTER DATABASE web CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 ```
